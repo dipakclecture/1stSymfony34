@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-success">
+                    <div class="panel-heading">My Post Details</div>
+                    {% if app.user != null %}
+                        <table class="table">
+                            <tr><a href="/addpost/" class="btn btn-info">Add Post</a>
+                            <tr><a href="/allpost/" class="btn btn-info">All Post</a>
+
+                            </tr>
+                            <tr>
+                                <th>Post Name</th>
+                                <th>Post</th>
+                                <th>Published On</th>
+                                <th>Likes</th>
+                            </tr>
+
+                            {% for key in myPost %}
+                                <tr>
+                                    <td>{{ key.postname }}</td>
+                                    <td>{{ key.post }}</td>
+                                    <td>{% if key.created != null %} {{ key.created | date("d/m/Y H:i:s A") }}{% else %}  NA {% endif %}</td>
+                                    <td>{{ key.like }}</td>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+                    {% endif %}
+                </div>
+                {% if app.user == null %}
+                    <a href="/login" class="btn btn-info"> You need to login to see the list  >></a>
+                    <a href="/register" class="btn btn-info"> Register an account  >></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

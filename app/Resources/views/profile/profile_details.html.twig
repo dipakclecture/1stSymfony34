@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-success">
+                    <div class="panel-heading">{% if app.user.id != profileDetails.forId.id %} Profile Details of {{ profileDetails.forId.name }} {% else %} Your profile details{% endif %}</div>
+                    {% if app.user != null %}
+                        <table class="table">
+                            <tr>
+                                <td><strong>ID:</strong></td><td>{{ profileDetails.forId.id }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NAME:</strong></td><td>{{ profileDetails.forId.name }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>EMAIL:</strong></td><td>{{ profileDetails.forId.email }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>AGE:</strong></td><td>{{ profileDetails.age }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GENDER:</strong></td><td>{{ profileDetails.gender }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CREATIONTIME:</strong></td><td>{{ profileDetails.forId.created | date("d/m/Y H:i:s A") }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UPDATIONTIME:</strong></td>
+                                <td>{% if app.user.updated != null %} {{ profileDetails.forId.updated | date("d/m/Y H:i:s A") }}{% else %}  NA {% endif %}</td>
+                            </tr>
+                            {% if app.user.id != profileDetails.forId.id %}
+                            <tr><a href="/friendrequest/{{ profileDetails.forId.id }}">Send Friend Request</a></tr>
+                            {% endif %}
+                            </table>
+                </div>
+                {% else %}
+                    <a href="/login" class="btn btn-info"> You need to login to see the list  >></a>
+                    <a href="/register" class="btn btn-info"> Register an account  >></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

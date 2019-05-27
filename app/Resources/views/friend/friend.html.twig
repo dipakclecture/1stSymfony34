@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-success">
+                    <div class="panel-heading">Friend List</div>
+                    {% if app.user != null %}
+                        <table class="table">
+                            <tr>
+                                <a href="/friendlist/1" class="btn btn-info">Show Friends</a>
+                                <a href="/friendlist/0" class="btn btn-info">Show Friend Requests</a>
+                                <a href="/friendlist/-1" class="btn btn-info"> Rejected Friend</a>
+                            </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th>Request Sent on</th>
+                                <th>Decision</th>
+                            </tr>
+                            {% for key in friendList %}
+                                <tr>
+                                    <td>{{ key.Sentby.name }}</td>
+                                    <td> {{ key.created | date("d/m/Y H:i:s A") }}</td>
+                                    <td>
+                                        {% if key.status ==0 %}
+                                        <a href="/friendaccept/{{ key.id }}" class="btn btn-info">Accept</a>
+                                        <a href="/friendreject/{{ key.id }}" class="btn btn-info">Reject</a>
+                                        {% elseif key.status ==1 %}
+                                            Accepted at {{ key.updated | date("d/m/Y H:i:s A") }}
+                                        {% else %}
+                                            Rejected at {{ key.updated | date("d/m/Y H:i:s A") }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+{#                            <tr>#}
+{#                                <td><strong>ID:</strong></td><td>{{ app.user.id }}</td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><strong>NAME:</strong></td><td>{{ app.user.name }}</td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><strong>EMAIL:</strong></td><td>{{ app.user.email }}</td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><strong>AGE:</strong></td><td>{% if profileDetails != null %}{{ profileDetails.age }} {% else %} <a href="/addprofile/{{ app.user.id }}">Add Details</a> {% endif %}</td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><strong>GENDER:</strong></td><td>{% if profileDetails != null %}{{ profileDetails.gender }} {% else %} <a href="/addprofile/{{ app.user.id }}">Add Details</a> {% endif %}</td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><strong>CREATIONTIME:</strong></td><td>{{ app.user.created | date("d/m/Y H:i:s A") }}</td>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <td><strong>UPDATIONTIME:</strong></td><td>{% if app.user.updated != null %} {{ app.user.updated | date("d/m/Y H:i:s A") }}{% endif %} {% if app.user.updated == null %} NA {% endif %}</td>#}
+{#                            </tr>#}
+                        </table>
+                    {% endif %}
+                </div>
+                {% if app.user == null %}
+                    <a href="/login" class="btn btn-info"> You need to login to see the list  >></a>
+                    <a href="/register" class="btn btn-info"> Register an account  >></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
